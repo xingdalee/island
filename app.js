@@ -1,12 +1,12 @@
 const koa = require("koa");
-const Router = require("koa-router");
 const app = new koa();
-const router = new Router();
-
-router.get("/hello", (ctx, next) => {
-  ctx.body = { key: "hello" };
+const Router = require("koa-router");
+const requireDirectory = require("require-directory");
+// 借助requireDirectory可以自动加载api下所有的js文件
+requireDirectory(module, "./api", {
+  visit: WenLoadModules
 });
-// ctx.router available
-app.use(router.routes());
-
+function WenLoadModules(obj) {
+  app.use(obj.routes());
+}
 app.listen(3000);
