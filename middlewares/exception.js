@@ -3,13 +3,14 @@
  * @Desc: 全局异常处理的中间件
  * @Date: 2019-06-08 11:00:39
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-08 15:54:07
+ * @Last Modified time: 2019-06-08 16:17:28
  */
-const { HttpException } = require("../core//HttpException");
+const { HttpException } = require("../core/http-exception");
 const catchError = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
+    //  已知错误
     if (error instanceof HttpException) {
       ctx.body = {
         msg: error.msg,
@@ -17,6 +18,14 @@ const catchError = async (ctx, next) => {
         request: `${ctx.method} ${ctx.path}`
       };
       ctx.status = error.code;
+    } else {
+      // 未知错误，如第三方错误
+      ctx.body = {
+        msg: "😭服务器内部错误",
+        errorCode: 999,
+        request: `${ctx.method} ${ctx.path}`
+      };
+      ctx.status = 500;
     }
   }
 };
