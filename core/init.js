@@ -6,11 +6,17 @@ class InitManager {
   static InitCore(app) {
     InitManager.app = app;
     InitManager.InitLoadRouter();
+    InitManager.LoadConfig();
+  }
+  static LoadConfig(path = "") {
+    const cpnfigPath = path || `${process.cwd()}/config/config.js`;
+    const config = require(cpnfigPath);
+    global.config = config;
   }
   // 初始化路由
   static InitLoadRouter() {
     // 配置绝对路径
-    const apiDirectory = `${process.cwd()}/app/api`
+    const apiDirectory = `${process.cwd()}/app/api`;
     // 借助requireDirectory可以自动加载api下所有的js文件
     requireDirectory(module, apiDirectory, {
       visit: obj => {

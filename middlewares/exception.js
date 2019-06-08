@@ -3,13 +3,16 @@
  * @Desc: 全局异常处理的中间件
  * @Date: 2019-06-08 11:00:39
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-08 16:17:28
+ * @Last Modified time: 2019-06-08 18:00:40
  */
 const { HttpException } = require("../core/http-exception");
 const catchError = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
+    if (global.config.environment === "dev") {
+      throw error;
+    }
     //  已知错误
     if (error instanceof HttpException) {
       ctx.body = {
