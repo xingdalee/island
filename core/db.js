@@ -1,9 +1,9 @@
 /*
  * @Author: lixingda
- * @Desc: 连接数据库
+ * @Desc: 数据库的配置表，规范各种字段或者特性
  * @Date: 2019-06-09 19:37:12
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-09 22:31:52
+ * @Last Modified time: 2019-06-09 22:50:31
  */
 // sequelize依赖于mysql2
 const { dbName, host, port, user, password } = require("../database");
@@ -24,7 +24,9 @@ const sequelize = new Sequelize(dbName, user, password, {
   }
 });
 // 如果不加，sequelize将不会把user等模型创建到数据库中
-sequelize.sync();
+sequelize.sync({
+  force: false // 如果设置为true，会删除表并且重新创建(因为后期加字段后，不会自动在表中创建，可以手动操作数据库)
+});
 module.exports = {
   sequelize
 };
