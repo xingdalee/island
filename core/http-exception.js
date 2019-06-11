@@ -3,7 +3,7 @@
  * @Desc: 继承Error基类，开发异常处理方法
  * @Date: 2019-06-08 15:36:47
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-11 21:19:59
+ * @Last Modified time: 2019-06-11 22:35:10
  */
 class HttpException extends Error {
   constructor(msg = "服务器异常", errorCode = 10001, code = 400, success) {
@@ -24,6 +24,7 @@ class ParameterException extends HttpException {
     this.success = false;
   }
 }
+// 成功的回调
 class Success extends HttpException {
   constructor(msg, errorCode, code) {
     super();
@@ -33,4 +34,14 @@ class Success extends HttpException {
     this.success = true;
   }
 }
-module.exports = { HttpException, ParameterException, Success };
+
+class AuthFailed extends HttpException {
+  constructor(msg, errorCode, code) {
+    super();
+    this.msg = msg || "授权失败";
+    this.code = 401;
+    this.errorCode = errorCode || 10004;
+    this.success = false;
+  }
+}
+module.exports = { HttpException, ParameterException, Success, AuthFailed };
