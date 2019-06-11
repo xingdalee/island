@@ -3,10 +3,11 @@
  * @Desc: 基于LinValidator构建的整数校验
  * @Date: 2019-06-08 16:50:32
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-10 22:43:52
+ * @Last Modified time: 2019-06-11 22:10:07
  */
 const { LinValidator, Rule } = require("../../core/lin-validator-v2");
 const { User } = require("../models/user");
+const { LoginType } = require("../lib/enum");
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
     super();
@@ -56,4 +57,33 @@ class RegisterValidator extends LinValidator {
     }
   }
 }
-module.exports = { PositiveIntegerValidator, RegisterValidator };
+// token的验证器
+class TokenValidator extends LinValidator {
+  constructor() {
+    super();
+    this.account = [
+      new Rule("isLength", "账号不符合规范", { min: 4, max: 32 })
+    ];
+    // 因为登陆的时候可能不需要密码，比如令牌，小程序等
+    // 可为空或者不为空
+    this.secret = [
+      // isOptional是LinValidator里的验证函数,定义后可以规定字段为空或者不为空等
+      // 如果secret有值，就必须遵守isOptional下面的其他Rule
+      new Rule("isOptional"),
+      new Rule("isLength", "账号不符合规范", { min: 6, max: 128 })
+    ];
+  }
+  validateLoginType(vals) {
+    if (!vals.body.type) {
+      throw new Error("type是必传参数");
+    }
+    if (!LoginType.isThisType(vals.body.type)) {
+      throw new Error("type参数不合法");
+    }
+  }
+}
+module.exports = {
+  PositiveIntegerValidator,
+  RegisterValidator,
+  TokenValidator
+};
