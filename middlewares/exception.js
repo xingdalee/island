@@ -3,7 +3,7 @@
  * @Desc: 全局异常处理的中间件
  * @Date: 2019-06-08 11:00:39
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-10 20:37:40
+ * @Last Modified time: 2019-06-11 21:19:21
  */
 const { HttpException } = require("../core/http-exception");
 const catchError = async (ctx, next) => {
@@ -20,6 +20,7 @@ const catchError = async (ctx, next) => {
       ctx.body = {
         msg: error.msg,
         errorCode: error.errorCode,
+        success: error.success,
         request: `${ctx.method} ${ctx.path}`
       };
       ctx.status = error.code;

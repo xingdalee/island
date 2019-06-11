@@ -13,7 +13,6 @@ router.post("/register", async (ctx, next) => {
     password: v.get("body.password1")
   };
   const res = await User.create(insterUserData);
-  const status = res ? true : false;
-  ctx.body = { success: status };
+  throw new global.errs.Success();
 });
 module.exports = router;

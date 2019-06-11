@@ -7,6 +7,7 @@ class InitManager {
     InitManager.app = app;
     InitManager.InitLoadRouter();
     InitManager.LoadConfig();
+    InitManager.LoadHttpException();
   }
   static LoadConfig(path = "") {
     const cpnfigPath = path || `${process.cwd()}/config/config.js`;
@@ -25,6 +26,10 @@ class InitManager {
         }
       }
     });
+  }
+  static LoadHttpException() {
+    const exception = require('./http-exception.js');
+    global.errs = exception;
   }
 }
 module.exports = InitManager;
