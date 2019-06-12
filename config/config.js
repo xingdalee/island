@@ -1,10 +1,16 @@
 /*
- * @Author: lixingda 
+ * @Author: lixingda
  * @Desc: 当前的环境是开发还是生产
- * @Date: 2019-06-08 17:55:19 
+ * @Date: 2019-06-08 17:55:19
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-08 18:01:45
+ * @Last Modified time: 2019-06-12 22:53:43
  */
 module.exports = {
-    environment: 'dev'
-}
+  environment: "dev",
+  security: {
+    // 正常的key需要随机复杂，没有规律
+    secretKey: "abcdefg",
+    // 令牌过期时间，60*60代表一个小时
+    expiresIn: 60 * 60
+  }
+};
