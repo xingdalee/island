@@ -6,6 +6,10 @@ const { Auth } = require("../../../middlewares//auth");
 const { PositiveIntegerValidator } = require("../../validator/validator");
 // new Auth().m 是一个中间件，放在下一个中间件的前面执行
 router.post("/latest", new Auth().m, async (ctx, next) => {
+  ctx.body = {
+    uid: ctx.auth.uid,
+    msg: "token验证成功啦"
+  };
   // const path = ctx.params;
   // const query = ctx.request.query;
   // const header = ctx.request.header;

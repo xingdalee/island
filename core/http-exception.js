@@ -3,7 +3,7 @@
  * @Desc: 继承Error基类，开发异常处理方法
  * @Date: 2019-06-08 15:36:47
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-11 22:35:10
+ * @Last Modified time: 2019-06-13 22:13:24
  */
 class HttpException extends Error {
   constructor(msg = "服务器异常", errorCode = 10001, code = 400, success) {
@@ -34,7 +34,7 @@ class Success extends HttpException {
     this.success = true;
   }
 }
-
+// 验证获取token的合法性
 class AuthFailed extends HttpException {
   constructor(msg, errorCode, code) {
     super();
@@ -44,4 +44,20 @@ class AuthFailed extends HttpException {
     this.success = false;
   }
 }
-module.exports = { HttpException, ParameterException, Success, AuthFailed };
+// 验证token是否合法的异常信息
+class Forbbiden extends HttpException {
+  constructor(msg, errorCode, code) {
+    super();
+    this.msg = msg || "禁止访问";
+    this.code = 403;
+    this.errorCode = errorCode || 10006;
+    this.success = false;
+  }
+}
+module.exports = {
+  HttpException,
+  ParameterException,
+  Success,
+  AuthFailed,
+  Forbbiden
+};
