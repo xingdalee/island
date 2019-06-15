@@ -2,6 +2,7 @@ const { sequelize } = require("../../core/db");
 const { Sequelize, Model } = require("sequelize");
 const bcryptjs = require("bcryptjs");
 class User extends Model {
+  // 验证用户密码是否正确
   static async verifyEmailPassWord(email, plainPassWord) {
     const userData = await User.findOne({
       where: {
@@ -17,6 +18,21 @@ class User extends Model {
       throw new global.errs.AuthFailed("密码错误");
     }
     return userData;
+  }
+  // 判断user表中是否存在openId
+  static async getUserByOpenid(openId) {
+    const userData = await User.findOne({
+      where: {
+        openId
+      }
+    });
+    return userData;
+  }
+  // 注册一个openId
+  static async registerByOpenid(openId) {
+    return await User.create({
+      openId
+    });
   }
 }
 User.init(

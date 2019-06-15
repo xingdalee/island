@@ -4,6 +4,7 @@ const { LoginType } = require("../../lib/enum");
 const { User } = require("../../models/user");
 const { generateToken } = require("../../../core/util");
 const { Auth } = require("../../../middlewares/auth");
+const { WXManager } = require("../../services/wx");
 const router = new Router({
   prefix: "/v1" // 自动给所有的请求加上前缀
 });
@@ -15,7 +16,9 @@ router.post("/token", async (ctx, next) => {
     case LoginType.USER_EMAIL:
       token = await emailLogin(v.get("body.account"), v.get("body.secret"));
       break;
-
+    case LoginType.USRE_MINI_PROGRAM:
+      token = await WXManager.codeToToken(v.get("body.account"));
+      break;
     default:
       break;
   }
