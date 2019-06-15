@@ -3,14 +3,20 @@
  * @Desc: 获取用户token
  * @Date: 2019-06-12 23:10:08
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-13 22:48:19
+ * @Last Modified time: 2019-06-15 20:34:53
  */
 // 使用的是http协议的basicAuth方法，postman在传的时候会自动使用base64加密，所以在前端传的时候需要手动加密
 const basicAuth = require("basic-auth");
 const jwt = require("jsonwebtoken");
 // 中间件
 class Auth {
-  constructor() {}
+  // level表示api的级别
+  constructor(level) {
+    this.level = level || 1;
+    // 定义类变量，做权限分级，普通用户是小于8的，admin用户是小于16的
+    Auth.USER = 8;
+    Auth.ADMIN = 16;
+  }
   // m是属性,不是函数，在外面取值的时候不能带（）
   get m() {
     // 设置一个中间件
@@ -31,6 +37,11 @@ class Auth {
         if (error.name === "TokenExpiredError") {
           errMeg = "token已过期";
         }
+        throw new global.errs.Forbbiden(errMeg);
+      }
+      // 权限拦截
+      if (decode.scope < this.level) {
+        errMeg = "权限不足";
         throw new global.errs.Forbbiden(errMeg);
       }
       // uid,scope,在后面会用的比较多，存在中间件的上下文中，方便使用

@@ -5,7 +5,8 @@ const router = new Router({
 const { Auth } = require("../../../middlewares//auth");
 const { PositiveIntegerValidator } = require("../../validator/validator");
 // new Auth().m 是一个中间件，放在下一个中间件的前面执行
-router.post("/latest", new Auth().m, async (ctx, next) => {
+// new Auth(9) 表示 9代表能访问这个api的级别
+router.post("/latest", new Auth(9).m, async (ctx, next) => {
   ctx.body = {
     uid: ctx.auth.uid,
     msg: "token验证成功啦"

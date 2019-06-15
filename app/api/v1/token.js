@@ -3,7 +3,7 @@ const { TokenValidator } = require("../../validator/validator");
 const { LoginType } = require("../../lib/enum");
 const { User } = require("../../models/user");
 const { generateToken } = require("../../../core/util");
-
+const { Auth } = require("../../../middlewares/auth");
 const router = new Router({
   prefix: "/v1" // 自动给所有的请求加上前缀
 });
@@ -21,7 +21,8 @@ router.post("/token", async (ctx, next) => {
   }
   async function emailLogin(account, secret) {
     const user = await User.verifyEmailPassWord(account, secret);
-    return generateToken(user.id, 2);
+    // 设定当前的接口的权限数字是Auth.USER
+    return (token = generateToken(user.id, Auth.USER));
   }
   ctx.body = {
     token
