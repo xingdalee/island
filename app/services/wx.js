@@ -3,7 +3,7 @@
  * @Desc: 专门用于处理微信小程序的方法
  * @Date: 2019-06-15 20:46:07
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-15 21:57:49
+ * @Last Modified time: 2019-06-15 22:48:29
  */
 // util是nodejs提供的工具方法
 const util = require("util");
@@ -26,7 +26,7 @@ class WXManager {
       throw new global.errs.AuthFailed("openid获取失败");
     }
     const errcode = result.data.errcode;
-    if (errcode !== 0) {
+    if (errcode) {
       throw new global.errs.AuthFailed("openid获取失败" + errcode);
     }
     const openId = result.data.openid;

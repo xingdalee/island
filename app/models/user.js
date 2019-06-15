@@ -20,18 +20,18 @@ class User extends Model {
     return userData;
   }
   // 判断user表中是否存在openId
-  static async getUserByOpenid(openId) {
+  static async getUserByOpenid(openid) {
     const userData = await User.findOne({
       where: {
-        openId
+        openid
       }
     });
     return userData;
   }
   // 注册一个openId
-  static async registerByOpenid(openId) {
+  static async registerByOpenid(openid) {
     return await User.create({
-      openId
+      openid
     });
   }
 }
