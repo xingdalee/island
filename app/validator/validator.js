@@ -33,7 +33,13 @@ class RegisterValidator extends LinValidator {
       new Rule("isLength", "昵称不符合规范", { min: 4, max: 32 })
     ];
   }
-  // 自定义验证方法必须validate开头
+
+  /**
+   *自定义验证方法必须validate开头
+   *
+   * @param {*} vals
+   * @memberof RegisterValidator
+   */
   validatePassword(vals) {
     const password1 = vals.body.password1;
     const password2 = vals.body.password2;
@@ -42,7 +48,12 @@ class RegisterValidator extends LinValidator {
       throw new Error("两个密码必须相同");
     }
   }
-  // 自定义email的验证是否是唯一的
+
+  /**
+   *自定义email的验证是否是唯一的
+   * @param {*} vals
+   * @memberof RegisterValidator
+   */
   async validateEmail(vals) {
     const emailVal = vals.body.email;
     // 因为返回的是Promise,所以用await直接求值
@@ -57,7 +68,12 @@ class RegisterValidator extends LinValidator {
     }
   }
 }
-// token的验证器
+
+/**
+ *token的验证器
+ * @class TokenValidator
+ * @extends {LinValidator}
+ */
 class TokenValidator extends LinValidator {
   constructor() {
     super();
@@ -82,8 +98,18 @@ class TokenValidator extends LinValidator {
     }
   }
 }
+/**
+ * 验证token效验接口是否合规
+ */
+class NotEmptyValidator extends LinValidator {
+  constructor() {
+    super();
+    this.token = [new Rule("isLength", "token不允许为空", { min: 1 })];
+  }
+}
 module.exports = {
   PositiveIntegerValidator,
   RegisterValidator,
-  TokenValidator
+  TokenValidator,
+  NotEmptyValidator
 };
