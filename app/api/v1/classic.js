@@ -2,23 +2,16 @@ const Router = require("koa-router");
 const router = new Router({
   prefix: "/v1/classic"
 });
-const { Auth } = require("../../../middlewares//auth");
+const { Auth } = require("../../../middlewares/auth");
+const { Flow } = require('../../models/flow');
 const { PositiveIntegerValidator } = require("../../validator/validator");
 // new Auth().m 是一个中间件，放在下一个中间件的前面执行
 // new Auth(9) 表示 9代表能访问这个api的级别
-router.post("/latest", new Auth(9).m, async (ctx, next) => {
-  ctx.body = {
-    uid: ctx.auth.uid,
-    msg: "token验证成功啦"
-  };
-  // const path = ctx.params;
-  // const query = ctx.request.query;
-  // const header = ctx.request.header;
-  // const body = ctx.request.body;
-  // const v = await new PositiveIntegerValidator().validate(ctx);
-  // // parsed是否进行数据类型转换，如把字符串id转换为数字类型
-  // // 第一个参数是获取的参数的嵌套地址，通过key来获取数据并且不用关心是否空值，比如body={a{b:{c:1}}},可以设置为"a.b.c"
-  // const id = v.get("path.id", (parsed = false));
-  // ctx.body = { key: "v1book" };
+router.get("/latest", new Auth().m, async (ctx, next) => {
+  // 给flow表的index字段数据倒序排序，并返回第一个数据，在业务上，index最大的，就是最新的
+  const flowData = await Flow.findOne({
+    order: [["index", "DESC"]]
+  });
+  ctx.body = flowData;
 });
 module.exports = router;

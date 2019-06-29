@@ -3,7 +3,7 @@
  * @Desc: 数据库的配置表，规范各种字段或者特性
  * @Date: 2019-06-09 19:37:12
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-09 22:50:31
+ * @Last Modified time: 2019-06-29 16:44:25
  */
 // sequelize依赖于mysql2
 const { dbName, host, port, user, password } = require("../database");
@@ -17,9 +17,9 @@ const sequelize = new Sequelize(dbName, user, password, {
   define: {
     timestamps: true, // 是否在表中自动生成cerateTime和updateTime这两个字段
     paranoid: true, // 逻辑删除的时候，是否显示删除时间
-    createdAt: "created_time", // 自定义创建时间的字段名
-    updatedAt: "updated_time", // 自定义修改时间的字段名
-    deletedAt: "deleted_time", // 自定义删除时间的字段名
+    createdAt: "created_at", // 自定义创建时间的字段名
+    updatedAt: "updated_at", // 自定义修改时间的字段名
+    deletedAt: "deleted_at", // 自定义删除时间的字段名
     underscored: true // 把驼峰字段自动转换为下划线
   }
 });

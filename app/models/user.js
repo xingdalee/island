@@ -1,3 +1,10 @@
+/*
+ * @Author: lixingda 
+ * @Desc: 数据库User表模型
+ * @Date: 2019-06-28 20:56:41 
+ * @Last Modified by:   lixingda 
+ * @Last Modified time: 2019-06-28 20:56:41 
+ */
 const { sequelize } = require("../../core/db");
 const { Sequelize, Model } = require("sequelize");
 const bcryptjs = require("bcryptjs");
