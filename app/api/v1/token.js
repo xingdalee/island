@@ -4,7 +4,7 @@ const {
   NotEmptyValidator
 } = require("../../validator/validator");
 const { LoginType } = require("../../lib/enum");
-const { User } = require("../../models/user");
+const { User } = require("@models");
 const { generateToken } = require("../../../core/util");
 const { Auth } = require("../../../middlewares/auth");
 const { WXManager } = require("../../services/wx");

@@ -3,7 +3,7 @@ const router = new Router({
   prefix: "/v1/like"
 });
 const { Auth } = require("../../../middlewares/auth");
-const { Favor } = require("../../models/favor");
+const { Favor } = require("@models");
 const { LikeValidator } = require("../../validator/validator");
 const { success } = require("../../lib/helper");
 

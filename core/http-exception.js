@@ -3,7 +3,7 @@
  * @Desc: 继承Error基类，开发异常处理方法
  * @Date: 2019-06-08 15:36:47
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-07-02 23:32:45
+ * @Last Modified time: 2019-07-08 22:39:20
  */
 class HttpException extends Error {
   constructor(msg = "服务器异常", errorCode = 10001, code = 400, success) {
@@ -65,7 +65,7 @@ class LikeError extends HttpException {
   }
 }
 // 验证是否已经取消点赞
-class DisLikeError extends HttpException {
+class DislikeError extends HttpException {
   constructor(msg, errorCode) {
     super();
     this.msg = msg || "你已取消点过赞";
@@ -82,5 +82,5 @@ module.exports = {
   AuthFailed,
   Forbbiden,
   LikeError,
-  DisLikeError
+  DislikeError
 };
