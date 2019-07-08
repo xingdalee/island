@@ -3,7 +3,7 @@
  * @Desc: 数据库的配置表，规范各种字段或者特性
  * @Date: 2019-06-09 19:37:12
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-29 16:44:25
+ * @Last Modified time: 2019-07-08 23:22:55
  */
 // sequelize依赖于mysql2
 const { dbName, host, port, user, password } = require("../database");
@@ -20,7 +20,17 @@ const sequelize = new Sequelize(dbName, user, password, {
     createdAt: "created_at", // 自定义创建时间的字段名
     updatedAt: "updated_at", // 自定义修改时间的字段名
     deletedAt: "deleted_at", // 自定义删除时间的字段名
-    underscored: true // 把驼峰字段自动转换为下划线
+    underscored: true, // 把驼峰字段自动转换为下划线
+    // 在实例化model的时候定义一个“全局”作用域，可以排除掉一些不想返回的参数，也可以在每个model上单独定义
+    scopes: {
+      // bhs是自定义的
+      bh: {
+        attributes: {
+          // exclude是排除这些数据
+          exclude: ["created_at", "updated_at", "deleted_at"]
+        }
+      }
+    }
   }
 });
 // 如果不加，sequelize将不会把user等模型创建到数据库中

@@ -12,7 +12,7 @@ router.get("/latest", new Auth().m, async (ctx, next) => {
     order: [["index", "DESC"]]
   });
   // art返回的是一个类，返回的数据都在defaultData的对象里
-  const art = await Art.getData(flowData.art_id, flowData.type);
+  const art = await Art.getData(flowData.art_id, flowData.type, false);
   const likeLatest = await Favor.userLikeIt(
     flowData.art_id,
     flowData.type,

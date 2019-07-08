@@ -3,7 +3,7 @@
  * @Desc: 用户点赞信息业务表，记录某个用户是否点赞了某个模块
  * @Date: 2019-07-02 23:08:18
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-07-08 22:54:19
+ * @Last Modified time: 2019-07-08 23:28:13
  */
 const { sequelize } = require("../../core/db");
 // 类
@@ -40,7 +40,7 @@ class Favor extends Model {
           transation: t
         }
       );
-      const art = await Art.getData(art_id, type);
+      const art = await Art.getData(art_id, type, false);
       // increment给fav_nums字段自动加1
       await art.increment("fav_nums", {
         by: 1,
@@ -69,7 +69,7 @@ class Favor extends Model {
         force: true,
         transation: t
       });
-      const art = await Art.getData(art_id, type);
+      const art = await Art.getData(art_id, type, false);
       // decrement和increment相反，给fav_nums字段自动减1
       await art.decrement("fav_nums", {
         by: 1,
