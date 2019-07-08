@@ -3,7 +3,7 @@
  * @Desc: 基于LinValidator构建的整数校验
  * @Date: 2019-06-08 16:50:32
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-06-11 22:10:07
+ * @Last Modified time: 2019-07-04 22:40:28
  */
 const { LinValidator, Rule } = require("../../core/lin-validator-v2");
 const { User } = require("../models/user");
@@ -107,9 +107,27 @@ class NotEmptyValidator extends LinValidator {
     this.token = [new Rule("isLength", "token不允许为空", { min: 1 })];
   }
 }
+/**
+ * 验证点赞接口的入参是否正确
+ */
+const checkType = vals => {
+  if (!vals.body.type) {
+    throw new Error("type是必填参数");
+  }
+  if (!LoginType.isThisType(vals.body.type)) {
+    throw new Error("type参数不合法");
+  }
+};
+class LikeValidator extends PositiveIntegerValidator {
+  constructor() {
+    super();
+    this.validateType = checkType;
+  }
+}
 module.exports = {
   PositiveIntegerValidator,
   RegisterValidator,
   TokenValidator,
-  NotEmptyValidator
+  NotEmptyValidator,
+  LikeValidator
 };
