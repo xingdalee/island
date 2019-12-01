@@ -1,28 +1,23 @@
 /*
  * @Author: lixingda
- * @Desc: 第一个get请求
+ * @Desc: 路由自动加载
  * @Date: 2019-12-01 16:58:52
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-12-01 17:32:44
+ * @Last Modified time: 2019-12-01 20:31:37
  */
 
 const koa = require("koa");
+const requireDirector = require("require-directory");
 const Router = require("koa-router");
 
 const app = new koa();
-const router = new Router();
 
-router.get("/getMessage", (ctx, next) => {
-  ctx.body = {
-    message: "我是router返回的消息"
-  };
+requireDirector(module, "./app/api", {
+  visit: moduleItem => {
+    // 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链
+    if (moduleItem instanceof Router) {
+      app.use(moduleItem.routes());
+    }
+  }
 });
-
-// router.post("/insterMessage", (ctx, next) => {
-//   ctx.body = {
-//     message: "insterMessage执行成功"
-//   };
-// });
-
-app.use(router.routes());
 app.listen(3000);
