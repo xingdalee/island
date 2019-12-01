@@ -3,18 +3,26 @@
  * @Desc: 第一个get请求
  * @Date: 2019-12-01 16:58:52
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-12-01 17:18:29
+ * @Last Modified time: 2019-12-01 17:32:44
  */
 
 const koa = require("koa");
+const Router = require("koa-router");
 
 const app = new koa();
+const router = new Router();
 
-app.use((ctx, next) => {
-  if (ctx.path === "/getMessage" && ctx.method === "GET") {
-    ctx.body = {
-      message: "成功获取了请求"
-    };
-  }
+router.get("/getMessage", (ctx, next) => {
+  ctx.body = {
+    message: "我是router返回的消息"
+  };
 });
+
+// router.post("/insterMessage", (ctx, next) => {
+//   ctx.body = {
+//     message: "insterMessage执行成功"
+//   };
+// });
+
+app.use(router.routes());
 app.listen(3000);
