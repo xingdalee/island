@@ -9,20 +9,12 @@ const koa = require("koa");
 
 const app = new koa();
 
-app.use(async (ctx, next) => {
-  console.log(1);
-  await next();
-  console.log(1);
+app.use(() => {
+  console.log("你好，蒲惠。");
 });
 
-app.use(async (ctx, next) => {
-  console.log(2);
-  await next();
-  console.log(2);
-});
-
-app.use(async (ctx, next) => {
-  console.log(3);
-});
-
+// 如何调用下一个中间件？
+// app.use(() => {
+//   console.log("你好，Koa。");
+// });
 app.listen(3000);
