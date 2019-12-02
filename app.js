@@ -3,13 +3,14 @@
  * @Desc: 第一个get请求
  * @Date: 2019-12-01 16:58:52
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-12-02 14:24:56
+ * @Last Modified time: 2019-12-02 14:27:08
  */
 
 const koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 
 const app = new koa();
+// 当POST请求的时候，中间件koa-bodyparser解析POST表单里的数据，并显示出来
 app.use(bodyParser());
 
 app.use(async (ctx, next) => {
