@@ -3,7 +3,7 @@
  * @Desc: 路由自动加载
  * @Date: 2019-12-01 16:58:52
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-12-01 20:31:37
+ * @Last Modified time: 2019-12-02 17:31:04
  */
 
 const koa = require("koa");
@@ -11,6 +11,8 @@ const requireDirector = require("require-directory");
 const Router = require("koa-router");
 
 const app = new koa();
+
+require("./app/models/user");
 
 requireDirector(module, "./app/api", {
   visit: moduleItem => {
