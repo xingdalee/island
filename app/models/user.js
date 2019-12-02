@@ -13,5 +13,5 @@ User.init(
     name: Sequelize.STRING(11),
     email: Sequelize.STRING
   },
-  { sequelize: db }
+  { sequelize: db, tableName: "User1112" }
 );
