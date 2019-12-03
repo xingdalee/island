@@ -19,7 +19,7 @@ const sequelize = new Sequelize("NodeKoa2", "root", "", {
 
 // 同步，将模型创建到数据库中
 sequelize.sync({
-  force: true // 如果设置为true，每次都会删除表格并新建
+  force: false // 如果设置为true，每次都会删除表格并新建
 });
 module.exports = {
   db: sequelize

@@ -9,13 +9,25 @@ router.post("/v1/insertUserInfo", async (ctx, next) => {
       body: { name, email }
     }
   } = ctx;
-  const userInfo = await User.create({
-    name,
-    email
+  const findUserInfo = await User.findOne({
+    where: {
+      email
+    }
   });
-  ctx.body = {
-    message: `已成功创建用户${userInfo.name}`
-  };
+  if (findUserInfo) {
+    const message = "email已存在";
+    ctx.body = {
+      message
+    };
+    throw new Error(message);
+  }
+//   const userInfo = await User.create({
+//     name,
+//     email
+//   });
+//   ctx.body = {
+//     message: `已成功创建用户${userInfo.name}`
+//   };
 });
 
 module.exports = router;
