@@ -13,5 +13,9 @@ User.init(
     name: Sequelize.STRING(11),
     email: Sequelize.STRING
   },
-  { sequelize: db, tableName: "User1112" }
+  { sequelize: db, tableName: "User" }
 );
+
+module.exports = {
+  User
+};
