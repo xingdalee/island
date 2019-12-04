@@ -3,7 +3,7 @@
  * @Desc: 路由自动加载
  * @Date: 2019-12-01 16:58:52
  * @Last Modified by: lixingda
- * @Last Modified time: 2019-12-03 20:27:14
+ * @Last Modified time: 2019-12-04 14:52:35
  */
 
 const koa = require("koa");
@@ -12,8 +12,10 @@ const koaBodyparser = require("koa-bodyparser");
 require("module-alias/register");
 
 const Router = require("koa-router");
+const catchError = require("./config/exception");
 const app = new koa();
 
+app.use(catchError);
 app.use(koaBodyparser());
 
 requireDirector(module, "./app/api", {

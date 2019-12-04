@@ -2,7 +2,16 @@ const { db } = require("../../config/db");
 const { Sequelize, Model } = require("sequelize");
 
 // 面向对象
-class User extends Model {}
+class User extends Model {
+  static async findUserInfo(queryInfo) {
+    const userData = await User.findOne({
+      where: {
+        ...queryInfo
+      }
+    });
+    return userData;
+  }
+}
 User.init(
   {
     id: {

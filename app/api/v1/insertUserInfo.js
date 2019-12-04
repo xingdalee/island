@@ -1,6 +1,6 @@
 const Router = require("koa-router");
 const { User } = require("../../models/user");
-
+const httpError = require("../../../config/httpError");
 const router = new Router();
 
 router.post("/v1/insertUserInfo", async (ctx, next) => {
@@ -9,25 +9,18 @@ router.post("/v1/insertUserInfo", async (ctx, next) => {
       body: { name, email }
     }
   } = ctx;
-  const findUserInfo = await User.findOne({
-    where: {
-      email
-    }
-  });
-  if (findUserInfo) {
+  const findInfo = await User.findUserInfo({ email });
+  if (findInfo) {
     const message = "email已存在";
-    ctx.body = {
-      message
-    };
-    throw new Error(message);
+    throw new httpError(message, 400, false);
   }
-//   const userInfo = await User.create({
-//     name,
-//     email
-//   });
-//   ctx.body = {
-//     message: `已成功创建用户${userInfo.name}`
-//   };
+  const userInfo = await User.create({
+    name,
+    email
+  });
+  ctx.body = {
+    message: `已成功创建用户${userInfo.name}`
+  };
 });
 
 module.exports = router;
